@@ -1,6 +1,8 @@
 import 'package:auth_nav/auth_nav.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_application/data/repositories/base_repository_impl.dart';
+import 'package:flutter_application/domain/repository/base_repository.dart';
 import 'package:flutter_application/ui/blocs/blocs.dart';
 import 'package:get_it/get_it.dart';
 import 'package:oauth2_dio/oauth2_dio.dart';
@@ -10,6 +12,8 @@ import 'data/datasource/local/local_service.dart';
 import 'data/dto/dto.dart';
 import 'data/repositories/repositories.dart';
 import 'env.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 Future initializeDependencies() async {
   Dio dio = Dio(BaseOptions(baseUrl: baseURL, contentType: 'application/json'));
@@ -18,11 +22,14 @@ Future initializeDependencies() async {
       return true;
     };
   };
+  var cookieJar=CookieJar();
+  dio.interceptors.add(CookieManager(cookieJar));
   dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   GetIt.instance.registerSingleton(dio);
 
   GetIt.instance.registerSingleton(AuthRepository());
+  GetIt.instance.registerSingleton<BaseRepository>(BaseRepositoryImpl());
 
   //region Local Service
   GetIt.instance.registerSingleton(await SharedPreferences.getInstance());

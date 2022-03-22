@@ -40,6 +40,7 @@ dependencies:
   # Collections and utilities functions and classes related to collections.
   collection: 1.15.0
   google_fonts: 2.3.1
+  dio_cookie_manager: 2.0.0
 
 
 dev_dependencies:
@@ -62,4 +63,6 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
+    - assets/
     - assets/icons/
+    - assets/images/
