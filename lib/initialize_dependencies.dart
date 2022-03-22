@@ -25,12 +25,19 @@ Future initializeDependencies() async {
   //endregion
 
   //region OAuth Manager
-  Oauth2Manager<AuthenticationDto> _oauth2manager = Oauth2Manager<
-          AuthenticationDto>(
-      currentValue: GetIt.instance.get<LocalService>().getAuthenticationDto(),
-      onSave: (value) {
-        GetIt.instance.get<LocalService>().saveAuth(value as AuthenticationDto);
-      });
+  Oauth2Manager<AuthenticationDto> _oauth2manager =
+      Oauth2Manager<AuthenticationDto>(
+          currentValue:
+              GetIt.instance.get<LocalService>().getAuthenticationDto(),
+          onSave: (value) {
+            if (value == null) {
+              GetIt.instance.get<SharedPreferences>().clear();
+            } else {
+              GetIt.instance
+                  .get<LocalService>()
+                  .saveAuth(value);
+            }
+          });
 
   GetIt.instance
       .registerSingleton<Oauth2Manager<AuthenticationDto>>(_oauth2manager);

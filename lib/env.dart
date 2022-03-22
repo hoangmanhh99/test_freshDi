@@ -1,1 +1,1 @@
-const baseURL = 'https://abc.com';
+const baseURL = 'https://rpc.freshdi.com/api/method';

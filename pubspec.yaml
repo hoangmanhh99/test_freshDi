@@ -39,6 +39,7 @@ dependencies:
 
   # Collections and utilities functions and classes related to collections.
   collection: 1.15.0
+  google_fonts: 2.3.1
 
 
 dev_dependencies:

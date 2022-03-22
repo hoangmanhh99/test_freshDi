@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/utils/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData light(BuildContext context) {
   return ThemeData.light().copyWith(
       appBarTheme: AppBarTheme(
           iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true,
-          titleTextStyle: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(color: Colors.white)),
+          titleTextStyle: GoogleFonts.roboto(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: Colors.white
+          )),
       textTheme: TextTheme(
           button: ThemeData.light().textTheme.button!.copyWith(
                 fontSize: 18,
@@ -60,7 +62,9 @@ ThemeData light(BuildContext context) {
           bodyText1: ThemeData.light().textTheme.bodyText1!.copyWith(
               color: ColorConstants.textPrimaryColor,
               fontSize: 18,
-              fontWeight: FontWeight.w500)));
+              fontWeight: FontWeight.w500,
+              fontFamily: GoogleFonts.roboto().fontFamily
+          )));
 }
 
 ThemeData dark(BuildContext context) {
