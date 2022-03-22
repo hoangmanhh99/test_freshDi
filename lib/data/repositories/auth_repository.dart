@@ -4,7 +4,7 @@ import 'package:flutter_application/data/dto/dto.dart';
 class AuthRepository {
   AuthApiService authApiService = AuthApiService();
 
-  Future<AuthenticationDto> login(String userName, String passWord) {
+  Future<String> login(String userName, String passWord) {
     return authApiService.login(userName, passWord);
   }
 

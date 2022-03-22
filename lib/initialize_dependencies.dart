@@ -1,4 +1,5 @@
 import 'package:auth_nav/auth_nav.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application/ui/blocs/blocs.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +12,12 @@ import 'data/repositories/repositories.dart';
 import 'env.dart';
 
 Future initializeDependencies() async {
-  Dio dio = Dio(BaseOptions(baseUrl: baseURL));
+  Dio dio = Dio(BaseOptions(baseUrl: baseURL, contentType: 'application/json'));
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+    client.badCertificateCallback = (cert, host, port) {
+      return true;
+    };
+  };
   dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   GetIt.instance.registerSingleton(dio);
@@ -25,22 +31,22 @@ Future initializeDependencies() async {
   //endregion
 
   //region OAuth Manager
-  Oauth2Manager<AuthenticationDto> _oauth2manager =
-      Oauth2Manager<AuthenticationDto>(
+  Oauth2Manager<String> _oauth2manager =
+      Oauth2Manager<String>(
           currentValue:
-              GetIt.instance.get<LocalService>().getAuthenticationDto(),
+              GetIt.instance.get<LocalService>().getInfo(),
           onSave: (value) {
             if (value == null) {
               GetIt.instance.get<SharedPreferences>().clear();
             } else {
               GetIt.instance
                   .get<LocalService>()
-                  .saveAuth(value);
+                  .saveInfo(value);
             }
           });
 
   GetIt.instance
-      .registerSingleton<Oauth2Manager<AuthenticationDto>>(_oauth2manager);
+      .registerSingleton<Oauth2Manager<String>>(_oauth2manager);
 
   dio.interceptors.add(
     Oauth2Interceptor(
@@ -50,7 +56,7 @@ Future initializeDependencies() async {
       parserJson: (json) {
         return AuthenticationDto.fromJson(json as Map<String, dynamic>);
       },
-      tokenProvider: _oauth2manager,
+      tokenProvider: Oauth2Manager<OAuthInfoMixin>(),
     ),
   );
   //endregion

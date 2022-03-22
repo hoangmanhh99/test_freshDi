@@ -14,7 +14,7 @@ class AuthBloc extends Cubit<AuthState> {
 
   AuthBloc() : super(const AuthState.unAuthorized()) {
     GetIt.instance
-        .get<Oauth2Manager<AuthenticationDto>>()
+        .get<Oauth2Manager<String>>()
         .controller
         .stream
         .listen((event) {
@@ -34,12 +34,12 @@ class AuthBloc extends Cubit<AuthState> {
 
   Future login(String username, String password) async {
     final auth = await _authRepository.login(username, password);
-    GetIt.instance.get<Oauth2Manager<AuthenticationDto>>().add(auth);
+    GetIt.instance.get<Oauth2Manager<String>>().add(auth);
     await _authRepository.profile();
   }
 
   Future logout() async {
     await _authRepository.logout();
-    GetIt.instance.get<Oauth2Manager<AuthenticationDto>>().add(null);
+    GetIt.instance.get<Oauth2Manager<String>>().add(null);
   }
 }

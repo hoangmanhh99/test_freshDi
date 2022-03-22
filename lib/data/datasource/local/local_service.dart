@@ -15,6 +15,22 @@ class LocalService {
     return sharedPreferences.containsKey(kKeyAuth);
   }
 
+  String? getInfo() {
+    if (isAuthorized()) {
+      return sharedPreferences.getString(kKeyAuth);
+    } else {
+      return null;
+    }
+  }
+
+  Future saveInfo(String? info) {
+    if (info == null) {
+      return clear();
+    } else {
+      return sharedPreferences.setString(kKeyAuth, info);
+    }
+  }
+
   AuthenticationDto? getAuthenticationDto() {
     if (isAuthorized()) {
       return AuthenticationDto.fromJson(

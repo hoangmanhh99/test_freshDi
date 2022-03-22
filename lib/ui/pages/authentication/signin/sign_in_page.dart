@@ -18,6 +18,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void initState() {
     super.initState();
+    usernameController.text = '0345678913';
+    passwordController.text = 'test2022';
   }
 
   @override
