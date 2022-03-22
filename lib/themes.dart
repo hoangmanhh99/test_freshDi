@@ -11,8 +11,9 @@ ThemeData light(BuildContext context) {
               fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white)),
       textTheme: TextTheme(
           button: ThemeData.light().textTheme.button!.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
               fontFamily: GoogleFonts.roboto().fontFamily),
           caption: ThemeData.light().textTheme.caption!.copyWith(
               fontSize: 12,
@@ -49,8 +50,8 @@ ThemeData light(BuildContext context) {
               fontFamily: GoogleFonts.roboto().fontFamily),
           subtitle1: ThemeData.light().textTheme.subtitle1!.copyWith(
               color: ColorConstants.textPrimaryColor,
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
               fontFamily: GoogleFonts.roboto().fontFamily),
           subtitle2: ThemeData.light().textTheme.subtitle2!.copyWith(
               color: ColorConstants.textPrimaryColor,

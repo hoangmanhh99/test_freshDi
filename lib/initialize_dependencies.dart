@@ -22,14 +22,14 @@ Future initializeDependencies() async {
       return true;
     };
   };
-  var cookieJar=CookieJar();
-  dio.interceptors.add(CookieManager(cookieJar));
   dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   GetIt.instance.registerSingleton(dio);
 
   GetIt.instance.registerSingleton(AuthRepository());
   GetIt.instance.registerSingleton<BaseRepository>(BaseRepositoryImpl());
+  var cookieJar=CookieJar();
+  dio.interceptors.add(CookieManager(cookieJar));
 
   //region Local Service
   GetIt.instance.registerSingleton(await SharedPreferences.getInstance());

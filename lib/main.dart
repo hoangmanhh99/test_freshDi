@@ -15,7 +15,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initializeDependencies();
-  // HttpOverrides.global = new MyHttpOverrides();
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider.value(value: GetIt.instance.get<AuthNavigationBloc>()),
@@ -29,11 +28,3 @@ void main() async {
     child: const Application(),
   ));
 }
-
-// class MyHttpOverrides extends HttpOverrides{
-//   @override
-//   HttpClient createHttpClient(SecurityContext context){
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
-//   }
-// }
