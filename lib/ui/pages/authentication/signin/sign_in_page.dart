@@ -36,24 +36,46 @@ class _SignInPageState extends State<SignInPage> {
               const Text('Đăng nhập', style: TextStyle(
                 fontSize: 48, fontWeight: FontWeight.bold, color: Colors.green
               ),),
-              kSpacingHeight16,
+              kSpacingHeight48,
               TextFormField(
                 controller: usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Username'
                 ),
               ),
               kSpacingHeight16,
               TextFormField(
                 controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: 'Password'
                 ),
               ),
               kSpacingHeight36,
-              ElevatedButton(onPressed: () async {
-                await context.read<AuthBloc>().login(usernameController.text, passwordController.text);
-              }, child: Text('Đăng nhập'))
+              Container(
+                height: 41,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    gradient: const LinearGradient(colors: [
+                      Color(0xFFFFB62C),
+                      Color(0xFFFF872C),
+                    ])),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await context.read<AuthBloc>().login(usernameController.text, passwordController.text);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        primary: Colors.transparent,
+                        maximumSize: const Size(double.infinity, 41),
+                        shadowColor: Colors.transparent),
+                    child: Text(
+                      'Đăng nhập',
+                      style: Theme.of(context).textTheme.button,
+                    )),
+              )
             ],
           ),
         ),

@@ -51,7 +51,7 @@ ThemeData light(BuildContext context) {
           subtitle1: ThemeData.light().textTheme.subtitle1!.copyWith(
               color: ColorConstants.textPrimaryColor,
               fontSize: 11,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w400,
               fontFamily: GoogleFonts.roboto().fontFamily),
           subtitle2: ThemeData.light().textTheme.subtitle2!.copyWith(
               color: ColorConstants.textPrimaryColor,
@@ -66,7 +66,36 @@ ThemeData light(BuildContext context) {
               color: ColorConstants.textPrimaryColor,
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              fontFamily: GoogleFonts.roboto().fontFamily)));
+              fontFamily: GoogleFonts.roboto().fontFamily)),
+      hintColor: ColorConstants.textGray3Color,
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: ColorConstants.textGray3Color,
+            fontSize: 9,
+            fontStyle: FontStyle.italic),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        isDense: true,
+        prefixStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: ColorConstants.textPrimaryColor,
+            fontWeight: FontWeight.w400),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+                color: ColorConstants.borderColor, width: 0.5)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+                color: ColorConstants.borderColor, width: 0.5)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+                color: ColorConstants.activeBorderColor, width: 1)),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+      ),
+  );
 }
 
 ThemeData dark(BuildContext context) {

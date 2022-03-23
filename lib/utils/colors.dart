@@ -28,4 +28,5 @@ class ColorConstants {
   static const Color textGray3Color = Color(0xFFC4C4C4);
   static const Color textGray5Color = Color(0xFFE0E0E0);
   static const Color activeBorderColor = Color(0xFFC5DDFF);
+  static const Color borderColor = Color(0xFFDBDBDB);
 }

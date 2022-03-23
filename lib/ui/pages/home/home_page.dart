@@ -9,6 +9,7 @@ import 'package:flutter_application/utils/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   static const path = 'HomePage';
@@ -22,10 +23,18 @@ class _HomePageState extends State<HomePage> {
   var farmController = TextEditingController();
   var seedController = TextEditingController();
   var subfarmController = TextEditingController();
-  var certController = TextEditingController();
   var sizeController = TextEditingController();
   var startEndController = TextEditingController();
   String cultivation = 'FTWZV001080209TA';
+  List uoms = [
+    'g',
+    'Kg',
+    'Tạ',
+    'Tấn',
+  ];
+  List certs = ['GlobalGAP', 'VietGAP'];
+  String selectedUom = '';
+  String selectedCert = '';
 
   @override
   void initState() {
@@ -70,9 +79,11 @@ class _HomePageState extends State<HomePage> {
                 farmController.text = data.cul_farm ?? "";
                 seedController.text = data.cul_seed ?? "";
                 subfarmController.text = data.cul_subfarm ?? "";
-                certController.text = data.cul_cert ?? "";
+                selectedCert = data.cul_cert ?? "";
                 sizeController.text = (data.cul_harvest_size ?? 0).toString();
-                // startEndController.text = data.cul_farm ?? "";
+                startEndController.text =
+                    '${DateFormat('d/M/yyyy').format(DateTime.parse(data.cul_harvest_start_date ?? ""))} - ${DateFormat('d/M/yyyy').format(DateTime.parse(data.cul_harvest_end_date ?? ""))}';
+                selectedUom = data.cul_harvest_uom ?? "";
                 return Container(
                   margin: const EdgeInsets.fromLTRB(28, 26, 31, 26),
                   child: Column(
@@ -82,13 +93,14 @@ class _HomePageState extends State<HomePage> {
                         '${data.cul_item}',
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
+                      kSpacingHeight24,
                       Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Text(
                               'Lô sản phẩm',
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
                           Expanded(
@@ -99,13 +111,14 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ),
+                      kSpacingHeight4,
                       Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Text(
                               'Loại giống',
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
                           Expanded(
@@ -116,13 +129,14 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ),
+                      kSpacingHeight4,
                       Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Text(
                               'Địa điểm sản xuất',
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
                           Expanded(
@@ -133,59 +147,100 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ),
+                      kSpacingHeight4,
                       Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Text(
                               'Tiêu chuẩn',
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
                           Expanded(
                             flex: 6,
-                            child: TextFormField(
-                              controller: certController,
+                            child: SizedBox(
+                              height: 29,
+                              child: DropdownButtonFormField<String>(
+                                value: selectedCert,
+                                items: certs.map((e) {
+                                  return DropdownMenuItem<String>(
+                                      value: e, child: Text(e));
+                                }).toList(),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedCert = newValue!;
+                                  });
+                                },
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                iconSize: 20,
+                              ),
                             ),
                           )
                         ],
                       ),
+                      kSpacingHeight4,
                       Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Text(
                               'Khối lượng',
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
                           Expanded(
-                            flex: 3,
-                            child: TextFormField(
-                              controller: sizeController,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: TextFormField(
-                              controller: sizeController,
+                            flex: 6,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: sizeController,
+                                  ),
+                                ),
+                                kSpacingWidth4,
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 29,
+                                    child: DropdownButtonFormField<String>(
+                                      value: selectedUom,
+                                      items: uoms.map((e) {
+                                        return DropdownMenuItem<String>(
+                                            value: e, child: Text(e));
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          selectedUom = newValue!;
+                                        });
+                                      },
+
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                      iconSize: 20,
+                                      // isExpanded: true,
+                                      // isDense: true,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
+                      kSpacingHeight4,
                       Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Text(
                               'NSX - HSD',
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
                           Expanded(
                               flex: 6,
                               child: TextFormField(
-                                controller: sizeController,
+                                controller: startEndController,
                               ))
                         ],
                       ),
@@ -335,9 +390,10 @@ class _HomePageState extends State<HomePage> {
         Expanded(
             child: Text(content,
                 maxLines: maxLines,
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      fontSize: 16,
-                    )))
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(fontSize: 16, fontWeight: FontWeight.w400)))
       ],
     );
   }
